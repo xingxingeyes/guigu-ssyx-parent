@@ -25,24 +25,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/admin/sys/regionWare")
 @CrossOrigin
 public class RegionController {
-    @Autowired
-    private RegionWareService regionWareService;
 
-    // 开通区域列表
-    @ApiOperation("开通区域列表")
-    @GetMapping("{page}/{limit}")
-    public Result list(@PathVariable Long page, @PathVariable Long limit, RegionWareQueryVo regionWareQueryVo) {
-        Page<RegionWare> pageParam  =new Page(page, limit);
-        IPage<RegionWare> pageModel = regionWareService.selectPageRegionWare(pageParam, limit, regionWareQueryVo);
-        return Result.ok(pageModel);
-    }
-
-    @ApiOperation("添加开通区域")
-    @PostMapping("save")
-    public Result addRegionWare(@RequestBody RegionWare regionWare) {
-        regionWareService.saveRegionWare(regionWare);
-        return Result.ok(null);
-    }
 
 }
 

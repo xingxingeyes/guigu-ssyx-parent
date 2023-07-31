@@ -20,4 +20,6 @@ public interface RegionWareService extends IService<RegionWare> {
     IPage<RegionWare> selectPageRegionWare(Page<RegionWare> pageParam, Long limit, RegionWareQueryVo regionWareQueryVo);
 
     void saveRegionWare(RegionWare regionWare);
+
+    void updateStatus(Long id, Integer status);
 }

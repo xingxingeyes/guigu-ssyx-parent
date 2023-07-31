@@ -46,4 +46,11 @@ public class RegionWareServiceImpl extends ServiceImpl<RegionWareMapper, RegionW
         }
         baseMapper.insert(regionWare);
     }
+
+    @Override
+    public void updateStatus(Long id, Integer status) {
+        RegionWare regionWare = baseMapper.selectById(id);
+        regionWare.setStatus(status);
+        baseMapper.updateById(regionWare);
+    }
 }
