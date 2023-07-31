@@ -6,29 +6,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PermissionHelper {
-    public static List<Permission> buildPermission(List<Permission> allList) {
-        List<Permission> trees = new ArrayList<>();
-        for (Permission permission : allList) {
-            if (permission.getPid() == 0) {
-                permission.setLevel(1);
-                trees.add(findChildren(permission, allList));
+    public static List<Permission> buildPermissions(List<Permission> allPermissionList) {
+        List<Permission> trees = new ArrayList<Permission>();
+        for (Permission treeNode : allPermissionList) {
+            if (treeNode.getPid() == 0) {
+                treeNode.setLevel(1);
+                trees.add(findChildren(treeNode, allPermissionList));
             }
         }
         return trees;
     }
 
-    private static Permission findChildren(Permission permission, List<Permission> allList) {
-        permission.setChildren(new ArrayList<Permission>());
-        for (Permission it : allList) {
-            if (it.getPid().longValue() == permission.getId().longValue()) {
-                int level = permission.getLevel() + 1;
+    private static Permission findChildren(Permission treeNode, List<Permission> allPermissionList) {
+        treeNode.setChildren(new ArrayList<>());
+        for (Permission it : allPermissionList) {
+            if (treeNode.getId().longValue() == it.getPid().longValue()) {
+                int level = treeNode.getLevel() + 1;
                 it.setLevel(level);
-                if (permission.getChildren() == null) {
-                    permission.setChildren(new ArrayList<>());
+                if (treeNode.getChildren() == null) {
+                    treeNode.setChildren(new ArrayList<Permission>());
                 }
-                permission.getChildren().add(findChildren(it, allList));
+                treeNode.getChildren().add(findChildren(it, allPermissionList));
             }
         }
-        return permission;
+        return treeNode;
     }
 }

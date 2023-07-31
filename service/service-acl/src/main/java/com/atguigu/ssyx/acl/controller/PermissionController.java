@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @Api(tags = "菜单管理")
 @RestController
@@ -19,44 +18,38 @@ public class PermissionController {
 
     @Autowired
     private PermissionService permissionService;
-
-    // 查询所有菜单
-    @ApiOperation("查询所有菜单")
+    @ApiOperation("获取菜单列表")
     @GetMapping
-    public Result list() {
-        List<Permission> list = permissionService.queryAllPermission();
-        return Result.ok(list);
+    public Result getList(){
+       List<Permission> permissionList = permissionService.queryAllPermission();
+        return Result.ok(permissionList);
     }
-    // 添加菜单
+
     @ApiOperation("添加菜单")
-    @PostMapping
-    public Result save(@RequestBody Permission permission) {
+    @PostMapping("/save")
+    public Result save(@RequestBody Permission permission){
         permissionService.save(permission);
         return Result.ok(null);
     }
 
-    // 修改菜单
     @ApiOperation("修改菜单")
-    @PutMapping
-    public Result update(@RequestBody Permission permission) {
+    @PutMapping("/update")
+    public Result update(@RequestBody Permission permission){
         permissionService.updateById(permission);
         return Result.ok(null);
     }
-    // 删除菜单
-    @ApiOperation("查询所有菜单")
-    @DeleteMapping("/remove/{id}")
-    public Result remove(@PathVariable Long id) {
+
+    @ApiOperation("递归删除菜单")
+    @PutMapping("/delete/{id}")
+    public Result update(@PathVariable Long id){
         permissionService.removeChildById(id);
         return Result.ok(null);
     }
-
-    //查看某个角色的权限列表
-    @ApiOperation("查看某个角色的权限列表")
+    @ApiOperation("查看角色权限列表")
     @GetMapping("/toAssign/{roleId}")
-    public Result toAssign(@PathVariable Long roleId) {
-//        Map<String, Object> map = permissionService.getPermissionByRoleId(roleId);
+    public Result toAssign(@PathVariable Long roleId){
+        //permissionService.removeChildById(id);
         return Result.ok(null);
     }
-
 
 }
