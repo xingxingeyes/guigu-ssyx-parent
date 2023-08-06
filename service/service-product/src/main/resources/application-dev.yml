@@ -13,6 +13,20 @@ spring:
     username: root
     password: root
 
+  rabbitmq:
+    host: 121.37.252.83
+    port: 5672
+    username: guest
+    password: guest
+    publisher-confirm-type: CORRELATED  #发布确认模式，消息是否被成功发送到交换机
+    publisher-returns: true
+    listener:
+      simple:
+        prefetch: 1
+        concurrency: 3
+        acknowledge-mode: manual   #消费端手动确认
+
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
+

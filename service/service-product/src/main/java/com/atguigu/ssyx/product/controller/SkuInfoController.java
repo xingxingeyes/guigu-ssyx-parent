@@ -64,6 +64,7 @@ public class SkuInfoController {
     @DeleteMapping("remove/{id}")
     public Result remove(@PathVariable Long id) {
         skuInfoService.removeById(id);
+        skuInfoService.publish(id, 0);
         return Result.ok(null);
     }
 
