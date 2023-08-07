@@ -26,7 +26,7 @@ import java.util.List;
 @Api(tags = "仓库接口")
 @RestController
 @RequestMapping("/admin/sys/ware")
-@CrossOrigin
+// @CrossOrigin 使用gateway就不用跨域注解了
 public class WareController {
 
     @Autowired

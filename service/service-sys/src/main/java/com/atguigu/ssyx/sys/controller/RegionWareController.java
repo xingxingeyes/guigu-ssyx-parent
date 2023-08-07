@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags = "开通区域接口")
 @RestController
 @RequestMapping("/admin/sys/regionWare")
-@CrossOrigin
+// @CrossOrigin 使用gateway就不用跨域注解了
 public class RegionWareController {
     @Autowired
     private RegionWareService regionWareService;

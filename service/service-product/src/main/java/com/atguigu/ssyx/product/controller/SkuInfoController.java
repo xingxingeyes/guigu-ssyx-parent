@@ -25,7 +25,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/admin/product/skuInfo")
-@CrossOrigin
+// @CrossOrigin 使用gateway就不用跨域注解了
 public class SkuInfoController {
 
     @Autowired

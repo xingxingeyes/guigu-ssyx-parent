@@ -10,7 +10,7 @@ import java.util.Map;
 @Api(tags = "登录接口")
 @RestController
 @RequestMapping("/admin/acl/index")
-@CrossOrigin // 允许跨域
+// @CrossOrigin 使用gateway就不用跨域注解了 // 允许跨域
 public class IndexController {
     //1.login 登录
     @ApiOperation("登录")

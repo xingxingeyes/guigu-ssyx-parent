@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.ssyx.activity.mapper.ActivityInfoMapper">
+
+    <select id="selectSkuIdListExist" resultType="Long">
+        select
+        sku.sku_id
+        from activity_info info
+        inner join activity_sku sku on sku.activity_id = info.id
+        <where>
+            <if test="skuIdList != null">
+                and sku.sku_id in
+                <foreach collection="skuIdList" item="item" index="index" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            and now() between info.start_time and info.end_time
+        </where>
+    </select>
+    
+</mapper>

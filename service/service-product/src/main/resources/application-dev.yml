@@ -4,6 +4,7 @@ server:
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  type-enums-package: com.atguigu.ssyx.enums
 
 spring:
   datasource:
@@ -11,7 +12,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/shequ-product?characterEncoding=utf-8&useSSL=false
     username: root
-    password: root
+    password: 123456
 
   rabbitmq:
     host: 121.37.252.83
@@ -29,4 +30,6 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
+
+
 

@@ -18,7 +18,7 @@ import java.util.Map;
 
 @Api(tags = "用户接口")
 @RestController
-@CrossOrigin
+// @CrossOrigin 使用gateway就不用跨域注解了
 @RequestMapping("/admin/acl/user")
 public class AdminController {
     @Autowired

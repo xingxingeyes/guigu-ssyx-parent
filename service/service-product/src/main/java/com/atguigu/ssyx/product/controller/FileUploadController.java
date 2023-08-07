@@ -14,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Api(tags = "文件上传接口")
 @RestController
 @RequestMapping("admin/product")
-@CrossOrigin
+// @CrossOrigin 使用gateway就不用跨域注解了
 public class FileUploadController {
 
     @Autowired

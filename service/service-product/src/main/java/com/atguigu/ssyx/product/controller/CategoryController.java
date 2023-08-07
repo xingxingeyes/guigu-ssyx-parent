@@ -24,7 +24,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/admin/product/category")
-@CrossOrigin
+// @CrossOrigin 使用gateway就不用跨域注解了
 public class CategoryController {
 
     @Autowired
