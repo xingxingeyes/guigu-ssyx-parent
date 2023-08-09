@@ -17,12 +17,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -40,6 +42,9 @@ public class SkuServiceImpl implements SkuService {
 
     @Autowired
     private ActivityFeignClient activityFeignClient;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     /**
      * 上架商品列表
@@ -136,5 +141,17 @@ public class SkuServiceImpl implements SkuService {
             }
         }
         return pageModel;
+    }
+
+    @Override
+    public void incrHotScore(Long skuId) {
+        String key = "hotScore";
+        Double hotScore = redisTemplate.opsForZSet().incrementScore(key, "skuId:" + skuId, 1);
+        if (hotScore % 10 == 0) {
+            Optional<SkuEs> optional = skuEsRepository.findById(skuId);
+            SkuEs skuEs = optional.get();
+            skuEs.setHotScore(Math.round(hotScore));
+            skuEsRepository.save(skuEs);
+        }
     }
 }

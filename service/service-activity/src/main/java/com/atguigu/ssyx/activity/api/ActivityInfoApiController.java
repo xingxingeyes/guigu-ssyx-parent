@@ -4,10 +4,7 @@ import com.atguigu.ssyx.activity.service.ActivityInfoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -27,4 +24,11 @@ public class ActivityInfoApiController {
     public Map<Long, List<String>> findActivity(@RequestBody List<Long> skuList) {
        return activityInfoService.findActivity(skuList);
     }
+
+    @ApiOperation(value = "根据skuId获取促销与优惠券信息")
+    @GetMapping("inner/findActivityAndCoupon/{skuId}/{userId}")
+    public Map<String, Object> findActivityAndCoupon(@PathVariable Long skuId, @PathVariable Long userId) {
+        return activityInfoService.findActivityAndCoupon(skuId, userId);
+    }
+
 }

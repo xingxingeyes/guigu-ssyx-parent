@@ -208,4 +208,6 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoMapper, SkuInfo> impl
         List<SkuInfo> records = skuInfoPage.getRecords();
         return records;
     }
+
+
 }

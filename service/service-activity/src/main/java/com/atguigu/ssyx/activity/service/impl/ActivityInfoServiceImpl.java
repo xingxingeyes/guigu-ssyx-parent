@@ -5,11 +5,13 @@ import com.atguigu.ssyx.activity.mapper.ActivityInfoMapper;
 import com.atguigu.ssyx.activity.mapper.ActivityRuleMapper;
 import com.atguigu.ssyx.activity.mapper.ActivitySkuMapper;
 import com.atguigu.ssyx.activity.service.ActivityInfoService;
+import com.atguigu.ssyx.activity.service.CouponInfoService;
 import com.atguigu.ssyx.client.product.ProductFeignClient;
 import com.atguigu.ssyx.enums.ActivityType;
 import com.atguigu.ssyx.model.activity.ActivityInfo;
 import com.atguigu.ssyx.model.activity.ActivityRule;
 import com.atguigu.ssyx.model.activity.ActivitySku;
+import com.atguigu.ssyx.model.activity.CouponInfo;
 import com.atguigu.ssyx.model.product.SkuInfo;
 import com.atguigu.ssyx.vo.activity.ActivityRuleVo;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -43,6 +45,9 @@ public class ActivityInfoServiceImpl extends ServiceImpl<ActivityInfoMapper, Act
     private ActivitySkuMapper activitySkuMapper;
     @Autowired
     private ProductFeignClient productFeignClient;
+    @Autowired
+    private CouponInfoService couponInfoService;
+
 
     @Override
     public IPage<ActivityInfo> selectPage(Page<ActivityInfo> pageParam) {
@@ -124,6 +129,28 @@ public class ActivityInfoServiceImpl extends ServiceImpl<ActivityInfoMapper, Act
             }
         });
         return result;
+    }
+
+    @Override
+    public Map<String, Object> findActivityAndCoupon(Long skuId, Long userId) {
+        // 1.根据skuId获取sku营销活动，一个活动有多少个规则
+        List<ActivityRule> activityRuleList = this.findActivityRuleBySkuId(skuId);
+        // 2.根据skuId + userId查询优惠券信息
+        List<CouponInfo> couponInfoList = couponInfoService.findCouponInfoList(skuId, userId);
+        // 3.封装到Map集合，返回
+        Map<String, Object> result = new HashMap<String, Object>();
+        result.put("couponInfoList", couponInfoList);
+        result.put("activityRuleList", activityRuleList);
+        return result;
+    }
+
+    @Override
+    public List<ActivityRule> findActivityRuleBySkuId(Long skuId) {
+        List<ActivityRule> activityRuleList = baseMapper.findActivityRule(skuId);
+        activityRuleList.forEach(item -> {
+            item.setRuleDesc(this.getRuleDesc(item));
+        });
+        return activityRuleList;
     }
 
     //构造规则名称的方法

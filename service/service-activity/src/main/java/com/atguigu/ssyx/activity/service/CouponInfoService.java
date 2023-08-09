@@ -6,6 +6,7 @@ import com.atguigu.ssyx.vo.activity.CouponRuleVo;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -25,4 +26,6 @@ public interface CouponInfoService extends IService<CouponInfo> {
     Map<String, Object> findCouponRuleList(Long id);
 
     void saveCouponRule(CouponRuleVo couponRuleVo);
+
+    List<CouponInfo> findCouponInfoList(Long skuId, Long userId);
 }

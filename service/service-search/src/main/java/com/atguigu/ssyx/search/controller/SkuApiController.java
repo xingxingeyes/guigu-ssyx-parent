@@ -57,4 +57,11 @@ public class SkuApiController {
         return Result.ok(pageModel);
     }
 
+    @ApiOperation(value = "更新商品incrHotScore")
+    @GetMapping("inner/incrHotScore/{skuId}")
+    public Boolean incrHotScore(@PathVariable("skuId") Long skuId) {
+        skuService.incrHotScore(skuId);
+        return true;
+    }
+
 }
