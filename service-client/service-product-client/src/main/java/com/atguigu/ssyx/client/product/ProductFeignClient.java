@@ -33,4 +33,12 @@ public interface ProductFeignClient {
     // 根据分类id获取列表
     @PostMapping("/api/product/inner/findCategoryList")
     public List<Category> findCategoryList(@RequestBody List<Long> categoryIdList);
+
+    // 获取所有分类
+    @GetMapping("/api/product/inner/findAllCategoryList")
+    public List<Category> findAllCategoryList();
+
+    // 获取新人专享
+    @GetMapping("/api/product/inner/findNewPersonSkuInfoList")
+    public List<SkuInfo> findNewPersonSkuInfoList();
 }

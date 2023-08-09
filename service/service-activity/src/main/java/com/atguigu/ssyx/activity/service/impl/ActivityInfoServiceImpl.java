@@ -18,6 +18,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -78,7 +79,7 @@ public class ActivityInfoServiceImpl extends ServiceImpl<ActivityInfoMapper, Act
         ActivityInfo activityInfo = baseMapper.selectById(activityId);
         ActivityType activityType = activityInfo.getActivityType();
         List<ActivityRule> activityRuleList = activityRuleVo.getActivityRuleList();
-        activityRuleList.forEach(item->{
+        activityRuleList.forEach(item -> {
             item.setActivityId(activityId);
             item.setActivityType(activityType);
             activityRuleMapper.insert(item);
@@ -101,10 +102,50 @@ public class ActivityInfoServiceImpl extends ServiceImpl<ActivityInfoMapper, Act
         List<Long> existSkuIdList = baseMapper.selectSkuIdListExist(skuIdList);
         List<SkuInfo> findSkuList = new ArrayList<>();
         for (SkuInfo skuInfo : skuInfoList) {
-            if(existSkuIdList.contains(skuInfo.getId())){
+            if (existSkuIdList.contains(skuInfo.getId())) {
                 findSkuList.add(skuInfo);
             }
         }
         return findSkuList;
     }
+
+    @Override
+    public Map<Long, List<String>> findActivity(List<Long> skuList) {
+        Map<Long, List<String>> result = new HashMap<>();
+        skuList.forEach(skuId -> {
+            List<ActivityRule> activityRuleList = baseMapper.findActivityRule(skuId);
+            if (!CollectionUtils.isEmpty(activityRuleList)) {
+                List<String> ruleList = new ArrayList<>();
+                // 处理规则名称
+                for (ActivityRule activityRule : activityRuleList) {
+                    ruleList.add(getRuleDesc(activityRule));
+                }
+                result.put(skuId, ruleList);
+            }
+        });
+        return result;
+    }
+
+    //构造规则名称的方法
+    private String getRuleDesc(ActivityRule activityRule) {
+        ActivityType activityType = activityRule.getActivityType();
+        StringBuffer ruleDesc = new StringBuffer();
+        if (activityType == ActivityType.FULL_REDUCTION) {
+            ruleDesc
+                    .append("满")
+                    .append(activityRule.getConditionAmount())
+                    .append("元减")
+                    .append(activityRule.getBenefitAmount())
+                    .append("元");
+        } else {
+            ruleDesc
+                    .append("满")
+                    .append(activityRule.getConditionNum())
+                    .append("元打")
+                    .append(activityRule.getBenefitDiscount())
+                    .append("折");
+        }
+        return ruleDesc.toString();
+    }
 }
+

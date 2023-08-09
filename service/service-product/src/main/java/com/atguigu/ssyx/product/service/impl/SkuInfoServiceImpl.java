@@ -198,4 +198,14 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoMapper, SkuInfo> impl
         List<SkuInfo> skuInfos = baseMapper.selectList(wrapper);
         return skuInfos;
     }
+
+    @Override
+    public List<SkuInfo> findNewPersonSkuInfoList() {
+        LambdaQueryWrapper<SkuInfo> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(SkuInfo::getIsNewPerson, 1).eq(SkuInfo::getPublishStatus, 1).orderByDesc(SkuInfo::getStock);
+        Page<SkuInfo> pageParam = new Page<>(1, 3);
+        IPage<SkuInfo> skuInfoPage = baseMapper.selectPage(pageParam, wrapper);
+        List<SkuInfo> records = skuInfoPage.getRecords();
+        return records;
+    }
 }
