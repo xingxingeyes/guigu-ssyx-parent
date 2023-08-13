@@ -1,5 +1,10 @@
 server:
-  port: 8208
+  port: 8209
+mybatis-plus:
+  type-enums-package: com.atguigu.ssyx.enums
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath:mapper/*.xml
 feign:
   sentinel:
     enabled: true
@@ -11,20 +16,11 @@ feign:
 spring:
   main:
     allow-bean-definition-overriding: true #当遇到同样名字的时候，是否允许覆盖注册
-
   rabbitmq:
     host: 121.37.252.83
     port: 5672
     username: guest
     password: guest
-    publisher-confirm-type: CORRELATED  #发布确认模式，消息是否被成功发送到交换机
-    publisher-returns: true
-    listener:
-      simple:
-        prefetch: 1
-        concurrency: 3
-        acknowledge-mode: manual   #消费端手动确认
-
   redis:
     host: localhost
     port: 6379
@@ -37,6 +33,20 @@ spring:
         max-wait: -1    #最大阻塞等待时间(负数表示没限制)
         max-idle: 5    #最大空闲
         min-idle: 0     #最小空闲
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/shequ-order?characterEncoding=utf-8&useSSL=false
+    username: root
+    password: 123456
+    hikari:
+      connection-test-query: SELECT 1
+      connection-timeout: 60000
+      idle-timeout: 500000
+      max-lifetime: 540000
+      maximum-pool-size: 5
+      minimum-idle: 3
+      pool-name: GuliHikariPool
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8

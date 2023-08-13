@@ -251,7 +251,7 @@ public class ActivityInfoServiceImpl extends ServiceImpl<ActivityInfoMapper, Act
                 .map(cartInfoVo -> cartInfoVo.getActivityRule().getReduceAmount())
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
         // 3 获取购物车可以使用优惠券列表
-        List<CouponInfo> couponInfoList = couponInfoService.findCartCouponInfo(cartInfoList,userId);
+        List<CouponInfo> couponInfoList = couponInfoService.findCartCouponInfo(cartInfoList, userId);
         // 4 计算商品使用优惠券后的价格，一次只能使用一张优惠券
         BigDecimal couponReduceAmount = new BigDecimal(0);
         if (!CollectionUtils.isEmpty(couponInfoList)) {
@@ -422,7 +422,6 @@ public class ActivityInfoServiceImpl extends ServiceImpl<ActivityInfoMapper, Act
 
         return total;
     }
-
 
 }
 

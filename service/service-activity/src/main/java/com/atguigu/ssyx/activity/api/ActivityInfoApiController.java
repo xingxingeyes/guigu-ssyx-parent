@@ -1,11 +1,15 @@
 package com.atguigu.ssyx.activity.api;
 
 import com.atguigu.ssyx.activity.service.ActivityInfoService;
+import com.atguigu.ssyx.activity.service.CouponInfoService;
+import com.atguigu.ssyx.model.activity.CouponInfo;
 import com.atguigu.ssyx.model.order.CartInfo;
+import com.atguigu.ssyx.vo.order.CartInfoVo;
 import com.atguigu.ssyx.vo.order.OrderConfirmVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -18,13 +22,15 @@ import java.util.Map;
 @Slf4j
 public class ActivityInfoApiController {
 
-    @Resource
+    @Autowired
     private ActivityInfoService activityInfoService;
+    @Autowired
+    private CouponInfoService couponInfoService;
 
     @ApiOperation(value = "根据skuId列表获取促销信息")
     @PostMapping("inner/findActivity")
     public Map<Long, List<String>> findActivity(@RequestBody List<Long> skuList) {
-       return activityInfoService.findActivity(skuList);
+        return activityInfoService.findActivity(skuList);
     }
 
     @ApiOperation(value = "根据skuId获取促销与优惠券信息")
@@ -40,5 +46,25 @@ public class ActivityInfoApiController {
         return activityInfoService.findCartActivityAndCoupon(cartInfoList, userId);
     }
 
+    // 获取购物车对应规则数据
+    @PostMapping("inner/findCartActivityList")
+    List<CartInfoVo> findCartActivityList(@RequestBody List<CartInfo> cartInfoList) {
+        return activityInfoService.findCartActivityList(cartInfoList);
+    }
+
+    // 获取购物车对应优惠券
+    @PostMapping("inner/findRangeSkuIdList/{couponId}")
+    public CouponInfo findRangeSkuIdList(@RequestBody List<CartInfo> cartInfoList, @PathVariable("couponId") Long couponId) {
+        return couponInfoService.findRangeSkuIdList(cartInfoList, couponId);
+    }
+
+    // 更新优惠券使用状态
+    @GetMapping("inner/updateCouponInfoUseStatus/{couponId}/{userId}/{orderId}")
+    public Boolean updateCouponInfoUseStatus(@PathVariable("couponId") Long couponId,
+                                             @PathVariable("userId") Long userId,
+                                             @PathVariable("orderId") Long orderId) {
+        couponInfoService.updateCouponInfoUseStatus(couponId, userId, orderId);
+        return true;
+    }
 
 }

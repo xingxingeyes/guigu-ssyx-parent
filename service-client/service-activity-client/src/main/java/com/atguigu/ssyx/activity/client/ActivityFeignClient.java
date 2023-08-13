@@ -1,6 +1,8 @@
 package com.atguigu.ssyx.activity.client;
 
+import com.atguigu.ssyx.model.activity.CouponInfo;
 import com.atguigu.ssyx.model.order.CartInfo;
+import com.atguigu.ssyx.vo.order.CartInfoVo;
 import com.atguigu.ssyx.vo.order.OrderConfirmVo;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -27,4 +29,18 @@ public interface ActivityFeignClient {
     @ApiOperation(value = "获取购物车满足条件的促销与优惠券信息")
     @PostMapping("/api/activity/inner/findCartActivityAndCoupon/{userId}")
     public OrderConfirmVo findCartActivityAndCoupon(@RequestBody List<CartInfo> cartInfoList, @PathVariable("userId") Long userId);
+
+    // 获取购物车对应规则数据
+    @PostMapping("/api/activity/inner/findCartActivityList")
+    List<CartInfoVo> findCartActivityList(@RequestBody List<CartInfo> cartInfoList);
+
+    // 获取购物车对应优惠券
+    @PostMapping("/api/activity/inner/findRangeSkuIdList/{couponId}")
+    public CouponInfo findRangeSkuIdList(@RequestBody List<CartInfo> cartInfoList, @PathVariable("couponId") Long couponId);
+
+    // 修改优惠券使用状态
+    @GetMapping("/api/activity/inner/updateCouponInfoUseStatus/{couponId}/{userId}/{orderId}")
+    public Boolean updateCouponInfoUseStatus(@PathVariable("couponId") Long couponId,
+                                          @PathVariable("userId") Long userId,
+                                          @PathVariable("orderId") Long orderId);
 }

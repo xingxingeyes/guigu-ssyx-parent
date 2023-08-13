@@ -5,8 +5,10 @@ import com.atguigu.ssyx.activity.service.ActivityInfoService;
 import com.atguigu.ssyx.common.result.Result;
 import com.atguigu.ssyx.model.activity.ActivityInfo;
 import com.atguigu.ssyx.model.activity.ActivityRule;
+import com.atguigu.ssyx.model.order.CartInfo;
 import com.atguigu.ssyx.model.product.SkuInfo;
 import com.atguigu.ssyx.vo.activity.ActivityRuleVo;
+import com.atguigu.ssyx.vo.order.CartInfoVo;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,6 +98,8 @@ public class ActivityInfoController {
         activityInfo.setActivityTypeString(activityInfo.getActivityType().getComment());
         return Result.ok(activityInfo);
     }
+
+
 
 
 }

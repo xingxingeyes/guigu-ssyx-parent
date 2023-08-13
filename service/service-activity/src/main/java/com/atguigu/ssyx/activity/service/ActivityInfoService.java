@@ -3,6 +3,7 @@ package com.atguigu.ssyx.activity.service;
 
 import com.atguigu.ssyx.model.activity.ActivityInfo;
 import com.atguigu.ssyx.model.activity.ActivityRule;
+import com.atguigu.ssyx.model.activity.CouponInfo;
 import com.atguigu.ssyx.model.order.CartInfo;
 import com.atguigu.ssyx.model.product.SkuInfo;
 import com.atguigu.ssyx.vo.activity.ActivityRuleVo;
@@ -43,4 +44,6 @@ public interface ActivityInfoService extends IService<ActivityInfo> {
     OrderConfirmVo findCartActivityAndCoupon(List<CartInfo> cartInfoList, Long userId);
 
     List<CartInfoVo> findCartActivityList(List<CartInfo> cartInfoList);
+
+
 }
