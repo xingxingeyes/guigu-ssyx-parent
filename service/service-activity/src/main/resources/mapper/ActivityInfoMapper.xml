@@ -31,8 +31,8 @@
                     #{item}
                 </foreach>
             </if>
-            and now() between info.start_time and info.end_time
         </where>
+        and now() between info.start_time and info.end_time
     </select>
 
 
@@ -55,6 +55,7 @@
     </select>
 
 
+    <!-- //根据所有skuId列表获取参与活动-->
     <select id="selectCartActivity" resultMap="ActivitySkuMap">
         select
         info.id as activityId,
@@ -66,8 +67,8 @@
             <foreach collection="skuIdList" item="item" open="(" close=")" separator=",">
                 #{item}
             </foreach>
-            and now() between info.start_time and info.end_time
         </where>
+        and now() between info.start_time  and info.end_time
     </select>
-    
+
 </mapper>

@@ -28,6 +28,7 @@ public class SkuReceiver {
             //调用方法商品上架
             skuService.upperSku(skuId);
         }
+        //手动确认接收到消息
         channel.basicAck(message.getMessageProperties().getDeliveryTag(),false);
     }
 

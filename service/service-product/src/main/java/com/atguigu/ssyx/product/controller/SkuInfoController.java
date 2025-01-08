@@ -35,6 +35,7 @@ public class SkuInfoController {
     @GetMapping("{page}/{limit}")
     public Result list(@PathVariable Long page, @PathVariable Long limit, SkuInfoQueryVo skuInfoQueryVo) {
         Page<SkuInfo> pageParam = new Page<>(page,limit);
+        //;;;;;;;;;;;;;;;;;;;;;;;;;;
         IPage<SkuInfo> pageModel = skuInfoService.selectPageSkuInfo(pageParam, skuInfoQueryVo);
         return Result.ok(pageModel);
     }
@@ -55,8 +56,11 @@ public class SkuInfoController {
 
     @ApiOperation("修改sku的信息")
     @PutMapping("update")
-    public Result update(@RequestBody SkuInfoVo skuInfoVo) {
+    public Result update(@RequestBody SkuInfoVo skuInfoVo, SkuInfoQueryVo skuInfoQueryVo) {
         skuInfoService.updateSkuInfo(skuInfoVo);
+//        double number = (double)skuInfoVo.getId()/10;
+//        long page = (long)Math.ceil(number);
+//        return list(page, (long) 10,skuInfoQueryVo);
         return Result.ok(null);
     }
 

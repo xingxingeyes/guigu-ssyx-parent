@@ -88,6 +88,9 @@ public class ActivityInfoServiceImpl extends ServiceImpl<ActivityInfoMapper, Act
         activityRuleList.forEach(item -> {
             item.setActivityId(activityId);
             item.setActivityType(activityType);
+            if(ActivityType.FULL_REDUCTION == activityType){
+                item.setConditionNum(null);
+            }
             activityRuleMapper.insert(item);
         });
         for (ActivitySku activitySku : activityRuleVo.getActivitySkuList()) {
@@ -108,7 +111,7 @@ public class ActivityInfoServiceImpl extends ServiceImpl<ActivityInfoMapper, Act
         List<Long> existSkuIdList = baseMapper.selectSkuIdListExist(skuIdList);
         List<SkuInfo> findSkuList = new ArrayList<>();
         for (SkuInfo skuInfo : skuInfoList) {
-            if (existSkuIdList.contains(skuInfo.getId())) {
+            if (!existSkuIdList.contains(skuInfo.getId())) {
                 findSkuList.add(skuInfo);
             }
         }
@@ -295,7 +298,7 @@ public class ActivityInfoServiceImpl extends ServiceImpl<ActivityInfoMapper, Act
             ruleDesc
                     .append("满")
                     .append(activityRule.getConditionNum())
-                    .append("元打")
+                    .append("件打")
                     .append(activityRule.getBenefitDiscount())
                     .append("折");
         }
@@ -330,7 +333,7 @@ public class ActivityInfoServiceImpl extends ServiceImpl<ActivityInfoMapper, Act
             StringBuffer ruleDesc = new StringBuffer()
                     .append("满")
                     .append(optimalActivityRule.getConditionNum())
-                    .append("元打")
+                    .append("件打")
                     .append(optimalActivityRule.getBenefitDiscount())
                     .append("折，还差")
                     .append(totalNum - optimalActivityRule.getConditionNum())
@@ -340,7 +343,7 @@ public class ActivityInfoServiceImpl extends ServiceImpl<ActivityInfoMapper, Act
             StringBuffer ruleDesc = new StringBuffer()
                     .append("满")
                     .append(optimalActivityRule.getConditionNum())
-                    .append("元打")
+                    .append("件打")
                     .append(optimalActivityRule.getBenefitDiscount())
                     .append("折，已减")
                     .append(optimalActivityRule.getReduceAmount())

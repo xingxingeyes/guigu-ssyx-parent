@@ -207,7 +207,6 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoMapper, SkuInfo> impl
         LambdaQueryWrapper<SkuInfo> wrapper = new LambdaQueryWrapper<>();
         if (!StringUtils.isEmpty(keyword)) {
             wrapper.like(SkuInfo::getSkuName, keyword);
-            ;
         }
         List<SkuInfo> skuInfos = baseMapper.selectList(wrapper);
         return skuInfos;

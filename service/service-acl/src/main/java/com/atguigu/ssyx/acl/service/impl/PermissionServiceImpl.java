@@ -33,7 +33,7 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
     private void selectChildListById(Long id, List<Long> idList) {
         LambdaQueryWrapper<Permission> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(Permission::getPid, id);
-        List<Permission> list = baseMapper.selectList(null);
+        List<Permission> list = baseMapper.selectList(wrapper);
         list.stream().forEach(item -> {
             idList.add(item.getId());
             this.selectChildListById(item.getId(), idList);

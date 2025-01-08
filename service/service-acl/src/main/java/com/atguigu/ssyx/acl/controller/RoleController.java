@@ -12,11 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Api(tags = "角色接口")
 @RestController
 @RequestMapping("/admin/acl/role")
-// @CrossOrigin 使用gateway就不用跨域注解了 //跨域
+// @CrossOrigin //使用gateway就不用跨域注解了 //跨域
 public class RoleController {
 
     @Autowired
@@ -65,6 +66,21 @@ public class RoleController {
     public Result batchRemove(@RequestBody List<Long> ids) {
         boolean is_success = roleService.removeByIds(ids);
         return is_success == true ? Result.ok(null) : Result.fail(null);
+    }
+
+    @ApiOperation("给角色分配菜单权限")
+    @PostMapping("doAssign")
+    public Result doAssign(@RequestParam Long adminId, @RequestParam Long[] roleId) {
+        roleService.saveAdminRole(adminId, roleId);
+        return Result.ok(null);
+    }
+
+    //获取所有角色，和根据用户id查询用户分配角色列表
+    @ApiOperation("获取角色菜单权限")
+    @GetMapping("toAssign/{adminId}")
+    public Result toAssign(@PathVariable Long adminId) {
+        Map<String, Object> map = roleService.getRoleByAdminId(adminId);
+        return Result.ok(map);
     }
 
 

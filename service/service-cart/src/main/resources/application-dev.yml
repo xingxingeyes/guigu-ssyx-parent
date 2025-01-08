@@ -13,7 +13,7 @@ spring:
     allow-bean-definition-overriding: true #当遇到同样名字的时候，是否允许覆盖注册
 
   rabbitmq:
-    host: 121.37.252.83
+    host: 127.0.0.1
     port: 5672
     username: guest
     password: guest

@@ -13,7 +13,7 @@ import java.util.List;
 @Api(tags = "菜单管理")
 @RestController
 @RequestMapping("/admin/acl/permission")
-// @CrossOrigin 使用gateway就不用跨域注解了
+// @CrossOrigin //使用gateway就不用跨域注解了
 public class PermissionController {
 
     @Autowired

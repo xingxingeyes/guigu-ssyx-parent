@@ -1,4 +1,4 @@
-package com.atguigu.ssyx.common.config;
+package com.atguigu.ssyx.mq.config;
 
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.connection.CorrelationData;

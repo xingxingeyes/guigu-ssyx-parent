@@ -18,7 +18,7 @@ import java.util.Map;
 
 @Api(tags = "用户接口")
 @RestController
-// @CrossOrigin 使用gateway就不用跨域注解了
+// @CrossOrigin //使用gateway就不用跨域注解了
 @RequestMapping("/admin/acl/user")
 public class AdminController {
     @Autowired
@@ -64,8 +64,8 @@ public class AdminController {
     @ApiOperation("添加用户")
     @PostMapping("save")
     public Result save(@RequestBody Admin admin) {
-        String password = MD5.encrypt(admin.getPassword());
-        admin.setPassword(password);
+//        String password = MD5.encrypt(admin.getPassword());
+//        admin.setPassword(password);
         boolean is_success = adminService.save(admin);
         return is_success == true ? Result.ok(null) : Result.fail(null);
     }

@@ -96,7 +96,7 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
         orderParamVo.setUserId(userId);
         // 第二步
         // 订单不能重复提交，重复提交验证
-        // 通过redis + lua脚本进行判断
+        // 通过redis + 脚本进行判断
         // 1.获取传递过来的订单 orderNo
         String orderNo = orderParamVo.getOrderNo();
         if (StringUtils.isEmpty(orderNo)) {

@@ -3,12 +3,15 @@ package com.atguigu.ssyx.activity.controller;
 
 import com.atguigu.ssyx.activity.service.CouponInfoService;
 import com.atguigu.ssyx.common.result.Result;
+import com.atguigu.ssyx.model.activity.ActivityInfo;
 import com.atguigu.ssyx.model.activity.CouponInfo;
+import com.atguigu.ssyx.model.product.SkuInfo;
 import com.atguigu.ssyx.vo.activity.CouponRuleVo;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,6 +35,24 @@ public class CouponInfoController {
     public Result selectPageCouponInfo(@PathVariable Long page, @PathVariable Long limit) {
         IPage<CouponInfo> pageModel = couponInfoService.selectPageCouponInfo(page, limit);
         return Result.ok(pageModel);
+    }
+
+    @PutMapping("update")
+    public Result update(@RequestBody CouponInfo activityInfo) {
+        couponInfoService.updateById(activityInfo);
+        return Result.ok(null);
+    }
+
+    @DeleteMapping("remove/{id}")
+    public Result remove(@PathVariable Long id) {
+        couponInfoService.removeById(id);
+        return Result.ok(null);
+    }
+
+    @DeleteMapping("batchRemove")
+    public Result batchRemove(@RequestBody List<Long> idList) {
+        couponInfoService.removeByIds(idList);
+        return Result.ok(null);
     }
 
     // 添加优惠券
@@ -61,7 +82,6 @@ public class CouponInfoController {
         couponInfoService.saveCouponRule(couponRuleVo);
         return Result.ok(null);
     }
-
 
 
 }
